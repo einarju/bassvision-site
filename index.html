@@ -108,9 +108,10 @@
       80%  { transform: translate(3%, 35%); }
       90%  { transform: translate(-10%,10%); }
     }
-    @keyframes hero-grad {
-      from { background-position: 0% center; }
-      to   { background-position: 100% center; }
+    @keyframes hero-color {
+      0%   { color: oklch(65% 0.20 265); }
+      50%  { color: oklch(62% 0.24 300); }
+      100% { color: oklch(95% 0.01 278); }
     }
 
     /* ── NAVBAR ──────────────────────────────────────────────────── */
@@ -256,18 +257,19 @@
       display: inline-block;
       transform: translateY(110%);
       transition: transform 1s var(--ease-out);
+      animation: hero-color 5s ease-in-out infinite alternate;
     }
-    /* staggered delays per character */
-    .char-wrap:nth-child(1)  .char { transition-delay: 0.04s; }
-    .char-wrap:nth-child(2)  .char { transition-delay: 0.09s; }
-    .char-wrap:nth-child(3)  .char { transition-delay: 0.13s; }
-    .char-wrap:nth-child(4)  .char { transition-delay: 0.17s; }
-    .char-wrap:nth-child(5)  .char { transition-delay: 0.22s; }
-    .char-wrap:nth-child(6)  .char { transition-delay: 0.26s; }
-    .char-wrap:nth-child(7)  .char { transition-delay: 0.30s; }
-    .char-wrap:nth-child(8)  .char { transition-delay: 0.33s; }
-    .char-wrap:nth-child(9)  .char { transition-delay: 0.37s; }
-    .char-wrap:nth-child(10) .char { transition-delay: 0.40s; }
+    /* staggered delays per character — transition-delay for reveal, animation-delay for color wave */
+    .char-wrap:nth-child(1)  .char { transition-delay: 0.04s; animation-delay:  0.00s; }
+    .char-wrap:nth-child(2)  .char { transition-delay: 0.09s; animation-delay: -0.50s; }
+    .char-wrap:nth-child(3)  .char { transition-delay: 0.13s; animation-delay: -1.00s; }
+    .char-wrap:nth-child(4)  .char { transition-delay: 0.17s; animation-delay: -1.50s; }
+    .char-wrap:nth-child(5)  .char { transition-delay: 0.22s; animation-delay: -2.00s; }
+    .char-wrap:nth-child(6)  .char { transition-delay: 0.26s; animation-delay: -2.50s; }
+    .char-wrap:nth-child(7)  .char { transition-delay: 0.30s; animation-delay: -3.00s; }
+    .char-wrap:nth-child(8)  .char { transition-delay: 0.33s; animation-delay: -3.50s; }
+    .char-wrap:nth-child(9)  .char { transition-delay: 0.37s; animation-delay: -4.00s; }
+    .char-wrap:nth-child(10) .char { transition-delay: 0.40s; animation-delay: -4.50s; }
     #hero-title.revealed .char { transform: translateY(0); }
 
     /* ── LAYOUT ──────────────────────────────────────────────────── */
@@ -326,16 +328,7 @@
       font-weight: 800;
       letter-spacing: -0.02em;
       line-height: 0.88;
-      background: linear-gradient(90deg,
-        oklch(65% 0.20 265) 0%,
-        oklch(60% 0.24 300) 50%,
-        oklch(95% 0.01 278) 100%);
-      background-size: 200% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      animation: hero-grad 6s ease-in-out infinite alternate;
+      color: oklch(97% 0.002 278);
       margin-bottom: 28px;
     }
     .hero-sub {
