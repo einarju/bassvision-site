@@ -1494,51 +1494,52 @@
     }
     window.addEventListener('load', setWorkHeight);
 
-    /* ── HERO TITLE LENS DISTORTION ────────────────────────────── */
+    /* ── HERO TITLE WARP — whole-title SVG displacement, no letter clipping ── */
     (function () {
       const titleEl = document.getElementById('hero-title');
       if (!titleEl) return;
-      const chars = titleEl.querySelectorAll('.char');
-      if (!chars.length) return;
 
-      const RADIUS  = 200;   /* px — lens radius of influence */
-      const PUSH    = 52;    /* px — max outward push at centre */
-      const MAGNIFY = 0.18;  /* max scale-up at lens centre */
+      /* feTurbulence drives a displacement map on the whole element at once */
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML = `<defs>
+        <filter id="title-warp" x="-15%" y="-50%" width="130%" height="200%">
+          <feTurbulence id="tw-turb" type="turbulence"
+            baseFrequency="0.013 0.028" numOctaves="2" seed="6" result="noise"/>
+          <feDisplacementMap id="tw-disp" in="SourceGraphic" in2="noise"
+            scale="0" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>`;
+      document.body.prepend(svg);
+      titleEl.style.filter = 'url(#title-warp)';
 
-      let mx = -9999, my = -9999;
-      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+      const turbEl = document.getElementById('tw-turb');
+      const dispEl = document.getElementById('tw-disp');
 
-      const cur = Array.from(chars).map(() => ({ x: 0, y: 0, s: 1 }));
-      const tgt = Array.from(chars).map(() => ({ x: 0, y: 0, s: 1 }));
+      let curScale = 0, tgtScale = 0;
+      let curFx = 0.013, tgtFx = 0.013;
 
-      function lensLoop() {
-        const rects = Array.from(chars).map(ch => ch.getBoundingClientRect());
-        chars.forEach((ch, i) => {
-          const r    = rects[i];
-          const cx   = r.left + r.width  * 0.5;
-          const cy   = r.top  + r.height * 0.5;
-          const dx   = cx - mx;
-          const dy   = cy - my;
-          const dist = Math.hypot(dx, dy);
-          const t    = Math.max(0, 1 - dist / RADIUS);
-          const amp  = t * t;                        /* quadratic falloff */
-          const nx   = dist > 1 ? dx / dist : 0;    /* unit direction away from cursor */
-          const ny   = dist > 1 ? dy / dist : 0;
+      document.addEventListener('mousemove', e => {
+        const rect = titleEl.getBoundingClientRect();
+        const cx   = rect.left + rect.width  * 0.5;
+        const cy   = rect.top  + rect.height * 0.5;
+        const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+        const t    = Math.max(0, 1 - dist / 380);
+        tgtScale   = t * t * 58;
+        /* shift frequency based on horizontal cursor position for spatial variation */
+        tgtFx = 0.010 + ((e.clientX - rect.left) / rect.width) * 0.008;
+      }, { passive: true });
 
-          tgt[i].x = nx * amp * PUSH;                /* push char away from cursor */
-          tgt[i].y = ny * amp * PUSH;
-          tgt[i].s = 1 + amp * MAGNIFY;              /* magnify near cursor */
-
-          cur[i].x += (tgt[i].x - cur[i].x) * 0.13;
-          cur[i].y += (tgt[i].y - cur[i].y) * 0.13;
-          cur[i].s += (tgt[i].s - cur[i].s) * 0.13;
-
-          ch.style.translate = `${cur[i].x.toFixed(2)}px ${cur[i].y.toFixed(2)}px`;
-          ch.style.scale     = cur[i].s.toFixed(3);
-        });
-        requestAnimationFrame(lensLoop);
+      function loop(ts) {
+        curScale += (tgtScale - curScale) * 0.10;
+        curFx    += (tgtFx    - curFx)    * 0.08;
+        /* slow drift to keep it alive even when still */
+        const drift = curFx + Math.sin(ts * 0.00022) * 0.002;
+        turbEl.setAttribute('baseFrequency', `${drift.toFixed(5)} ${(drift * 2.15).toFixed(5)}`);
+        dispEl.setAttribute('scale', curScale.toFixed(1));
+        requestAnimationFrame(loop);
       }
-      requestAnimationFrame(lensLoop);
+      requestAnimationFrame(loop);
     })();
   </script>
 </body>
