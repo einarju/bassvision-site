@@ -108,6 +108,10 @@
       80%  { transform: translate(3%, 35%); }
       90%  { transform: translate(-10%,10%); }
     }
+    @keyframes hero-grad {
+      from { background-position: 0% center; }
+      to   { background-position: 100% center; }
+    }
 
     /* ── NAVBAR ──────────────────────────────────────────────────── */
     #navbar {
@@ -322,7 +326,16 @@
       font-weight: 800;
       letter-spacing: -0.02em;
       line-height: 0.88;
-      color: oklch(97% 0.002 278);
+      background: linear-gradient(90deg,
+        oklch(65% 0.20 265) 0%,
+        oklch(60% 0.24 300) 50%,
+        oklch(95% 0.01 278) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: hero-grad 6s ease-in-out infinite alternate;
       margin-bottom: 28px;
     }
     .hero-sub {
@@ -1487,6 +1500,41 @@
       setWorkHeight();
     }
     window.addEventListener('load', setWorkHeight);
+
+    /* ── HERO TITLE DISTORTION ─────────────────────────────────── */
+    (function() {
+      const titleEl = document.getElementById('hero-title');
+      if (!titleEl) return;
+      const chars = titleEl.querySelectorAll('.char');
+      if (!chars.length) return;
+
+      const RADIUS  = 220;
+      const MAX_AMP = 26;
+      let mx = -9999, my = -9999;
+
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+
+      const cur = Array.from(chars).map(() => ({ x: 0, y: 0 }));
+
+      function distortTick(ts) {
+        const rects = Array.from(chars).map(ch => ch.getBoundingClientRect());
+        chars.forEach((ch, i) => {
+          const r    = rects[i];
+          const cx   = r.left + r.width  * 0.5;
+          const cy   = r.top  + r.height * 0.5;
+          const dist = Math.hypot(mx - cx, my - cy);
+          const t    = Math.max(0, 1 - dist / RADIUS);
+          const amp  = t * t * MAX_AMP;
+          const tx   = Math.sin(ts * 0.0032 + i * 0.85) * amp;
+          const ty   = Math.cos(ts * 0.0025 + i * 1.20) * amp * 0.55;
+          cur[i].x  += (tx - cur[i].x) * 0.15;
+          cur[i].y  += (ty - cur[i].y) * 0.15;
+          ch.style.translate = `${cur[i].x.toFixed(2)}px ${cur[i].y.toFixed(2)}px`;
+        });
+        requestAnimationFrame(distortTick);
+      }
+      requestAnimationFrame(distortTick);
+    })();
   </script>
 </body>
 </html>
