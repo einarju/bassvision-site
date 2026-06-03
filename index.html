@@ -85,45 +85,6 @@
       border: 1px solid oklch(43% 0.162 278 / 0.6);
     }
 
-    /* ── AMBIENT BACKGROUND ORBS ────────────────────────────────── */
-    .bg-orb {
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      will-change: transform;
-      z-index: 0;
-    }
-    .bg-orb-1 {
-      width: 80vw; height: 70vw;
-      max-width: 1100px; max-height: 900px;
-      left: -22vw; top: 8%;
-      background: radial-gradient(ellipse at center,
-        oklch(17% 0.002 278) 0%,
-        oklch(11% 0.001 278) 48%,
-        transparent 70%);
-      filter: blur(72px);
-      animation: orb-1 72s ease-in-out infinite alternate;
-    }
-    .bg-orb-2 {
-      width: 65vw; height: 60vw;
-      max-width: 880px; max-height: 780px;
-      right: -18vw; top: 50%;
-      background: radial-gradient(ellipse at center,
-        oklch(14% 0.002 278) 0%,
-        oklch(9%  0.001 278) 50%,
-        transparent 70%);
-      filter: blur(80px);
-      animation: orb-2 56s ease-in-out infinite alternate;
-    }
-    @keyframes orb-1 {
-      0%   { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(22vw, 35vh) scale(1.12); }
-    }
-    @keyframes orb-2 {
-      0%   { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-18vw, -28vh) scale(1.08); }
-    }
-
     /* ── GRAIN ───────────────────────────────────────────────────── */
     .grain {
       position: fixed;
@@ -1044,8 +1005,6 @@
   <div id="progress-bar"></div>
   <div id="cursor"  aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
-  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
-  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
 
   <!-- ── NAVBAR ──────────────────────────────────────────────────── -->
   <nav id="navbar">
