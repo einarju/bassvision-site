@@ -12,7 +12,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&family=Barlow+Condensed:wght@600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
 
   <style>
     /* ── RESET ───────────────────────────────────────────────────── */
@@ -21,14 +21,14 @@
 
     /* ── TOKENS ──────────────────────────────────────────────────── */
     :root {
-      --bg:           oklch(8%  0.004 278);
-      --bg-card:      oklch(11% 0.004 278);
-      --border:       oklch(18% 0.004 278);
-      --text:         oklch(94% 0.002 278);
-      --text-muted:   oklch(52% 0.003 278);
-      --text-dim:     oklch(28% 0.003 278);
-      --accent:       oklch(43% 0.162 278);
-      --accent-hi:    oklch(49% 0.162 278);
+      --bg:           #0C0B14;
+      --bg-card:      #111020;
+      --border:       #1E1C2C;
+      --text:         #F5F3FF;
+      --text-muted:   #7874A0;
+      --text-dim:     #3C3A54;
+      --accent:       #7B4FFF;
+      --accent-hi:    #9B72FF;
       --font-d:       'Barlow Condensed', sans-serif;
       --font:         'Barlow', sans-serif;
       --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
@@ -81,8 +81,8 @@
     #cursor.active  { opacity: 1; }
     #cursor.hovering {
       width: 56px; height: 56px;
-      background: oklch(43% 0.162 278 / 0.1);
-      border: 1px solid oklch(43% 0.162 278 / 0.6);
+      background: rgba(123, 79, 255, 0.1);
+      border: 1px solid rgba(123, 79, 255, 0.6);
     }
 
     /* ── GRAIN ───────────────────────────────────────────────────── */
@@ -109,9 +109,9 @@
       90%  { transform: translate(-10%,10%); }
     }
     @keyframes hero-color {
-      0%   { color: oklch(65% 0.20 265); }
-      50%  { color: oklch(62% 0.24 300); }
-      100% { color: oklch(95% 0.01 278); }
+      0%   { color: #7B4FFF; }
+      50%  { color: #9B72FF; }
+      100% { color: #F5F3FF; }
     }
 
     /* ── NAVBAR ──────────────────────────────────────────────────── */
@@ -127,7 +127,7 @@
       transition: background 0.5s ease, border-bottom 0.5s ease;
     }
     #navbar.scrolled {
-      background: oklch(8% 0.004 278 / 0.95);
+      background: rgba(12, 11, 20, 0.95);
       border-bottom: 1px solid var(--border);
       backdrop-filter: blur(12px);
     }
@@ -171,7 +171,7 @@
       display: none;
       position: fixed;
       top: var(--nav-h); left: 0; right: 0;
-      background: oklch(8% 0.004 278 / 0.98);
+      background: rgba(12, 11, 20, 0.98);
       border-bottom: 1px solid var(--border);
       padding: 28px 40px;
       flex-direction: column;
@@ -198,7 +198,7 @@
       color: var(--text);
       transition: background 0.3s ease, color 0.3s ease;
     }
-    .btn:hover { background: var(--accent); color: oklch(97% 0.002 278); }
+    .btn:hover { background: var(--accent); color: #F5F3FF; }
     .btn-solid { background: var(--accent); }
     .btn-solid:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
 
@@ -323,17 +323,18 @@
       color: var(--accent); margin-bottom: 20px;
     }
     #hero-title {
-      font-family: var(--font-d);
-      font-size: clamp(88px, 18vw, 172px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 0.88;
-      color: oklch(97% 0.002 278);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(80px, 18vw, 220px);
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      line-height: 0.9;
+      white-space: nowrap;
+      color: #F5F3FF;
       margin-bottom: 28px;
     }
     .hero-sub {
       font-size: clamp(14px, 2vw, 18px);
-      color: oklch(80% 0.003 278 / 0.6);
+      color: rgba(245, 243, 255, 0.6);
       margin-bottom: 8px;
     }
     .hero-tags {
@@ -497,7 +498,7 @@
       height: 100%;
       position: relative;
       overflow: hidden;
-      background: oklch(9% 0.004 278);
+      background: #0F0E1A;
       display: block;
     }
     .work-frame--wide { width: 64vw; }
@@ -513,7 +514,7 @@
       font-size: 46vw;
       font-weight: 800;
       line-height: 1;
-      color: oklch(94% 0.002 278);
+      color: #F5F3FF;
       opacity: 0.025;
       pointer-events: none;
       z-index: 1;
@@ -547,13 +548,13 @@
       position: absolute;
       inset: 0;
       z-index: 2;
-      background: oklch(9% 0.006 278);
+      background: #0E0D1B;
     }
     .work-frame-img--empty::before,
     .work-frame-img--empty::after {
       content: '';
       position: absolute;
-      background: oklch(17% 0.004 278);
+      background: #1D1B2E;
     }
     .work-frame-img--empty::before {
       left: 50%; top: 22%; bottom: 22%;
@@ -589,10 +590,10 @@
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.22em;
-      color: oklch(94% 0.002 278 / 0.3);
+      color: rgba(245, 243, 255, 0.3);
       transition: color 0.4s ease;
     }
-    .work-frame:hover .work-frame-idx { color: oklch(94% 0.002 278 / 0.55); }
+    .work-frame:hover .work-frame-idx { color: rgba(245, 243, 255, 0.55); }
 
     /* Content — bottom of frame */
     .work-frame-body {
@@ -620,13 +621,13 @@
       font-weight: 800;
       letter-spacing: -0.01em;
       line-height: 0.97;
-      color: oklch(97% 0.002 278);
+      color: #F5F3FF;
       margin-bottom: 8px;
     }
 
     .work-frame-artist {
       font-size: 13px;
-      color: oklch(65% 0.003 278 / 0.7);
+      color: rgba(245, 243, 255, 0.5);
       margin-bottom: 30px;
       letter-spacing: 0.02em;
     }
@@ -640,7 +641,7 @@
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: oklch(60% 0.003 278);
+      color: rgba(245, 243, 255, 0.45);
       transition: color 0.35s ease;
     }
     .work-frame-cta-line {
@@ -650,7 +651,7 @@
       background: currentColor;
       transition: width 0.5s var(--ease-out), background 0.35s ease;
     }
-    .work-frame:hover .work-frame-cta { color: oklch(94% 0.002 278); }
+    .work-frame:hover .work-frame-cta { color: #F5F3FF; }
     .work-frame:hover .work-frame-cta-line { width: 40px; }
 
     /* ── Mobile fallback — vertical stack ──────────────────────── */
@@ -752,7 +753,7 @@
       border: 1px solid var(--accent); color: var(--accent);
       width: fit-content;
     }
-    .store-badge.free { border-color: oklch(68% 0.15 162); color: oklch(68% 0.15 162); }
+    .store-badge.free { border-color: #9B72FF; color: #9B72FF; }
     .store-name {
       font-family: var(--font-d);
       font-size: 21px; font-weight: 700; line-height: 1.2;
@@ -819,7 +820,7 @@
       width: 100%; padding: 15px;
       font-size: 12px; font-weight: 500;
       letter-spacing: 0.12em; text-transform: uppercase;
-      background: var(--accent); color: oklch(97% 0.002 278);
+      background: var(--accent); color: #F5F3FF;
       border: 1px solid var(--accent); font-family: var(--font);
       cursor: none; transition: background 0.25s ease, border-color 0.25s ease;
     }
@@ -1058,10 +1059,12 @@
           </a>
 
           <!-- 04 — CTA (narrower) -->
-          <a class="work-frame work-frame--cta" href="#contact">
+          <a class="work-frame work-frame--cta" href="https://www.youtube.com/watch?v=aFEBuMPPvIQ" target="_blank" rel="noopener noreferrer">
             <span class="work-frame-ghost" aria-hidden="true">04</span>
             <span class="work-frame-idx">04</span>
-            <div class="work-frame-img--empty"></div>
+            <div class="work-frame-img">
+              <img src="assets/work4.jpg" alt="Full Music Video" loading="lazy">
+            </div>
             <div class="work-frame-grad"></div>
             <div class="work-frame-body">
               <span class="work-frame-tag">Full Music Video</span>
@@ -1069,7 +1072,7 @@
               <p class="work-frame-artist">Booking open</p>
               <span class="work-frame-cta">
                 <span class="work-frame-cta-line"></span>
-                Get in touch
+                Watch on YouTube
               </span>
             </div>
           </a>
